@@ -86,7 +86,7 @@
     <h1>Product List</h1>
     <div id="product-list"></div>
 
-    <h2>Shopping Cart</h2>
+
     <div class="cart" id="cart-items"></div>
     <button class="checkout-button" onclick="openCheckoutModal()">Checkout</button>
 
@@ -108,7 +108,7 @@
         });
 
         function fetchProducts() {
-            fetch('https://github.com/Qi-Hua-fine/online-store/blob/main/data/products.json')
+            fetch('/data/products.json')
                 .then(response => response.json())
                 .then(data => {
                     const productList = document.getElementById('product-list');
@@ -216,7 +216,5 @@
         }
     </script>
 </body>
-
-</html>
 
 </html>
