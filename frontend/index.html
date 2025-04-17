@@ -108,7 +108,7 @@
         });
 
         function fetchProducts() {
-            fetch('/data/products.json')
+            fetch('https://raw.githubusercontent.com/Qi-Hua-fine/online-store/main/data/products.json')
                 .then(response => response.json())
                 .then(data => {
                     const productList = document.getElementById('product-list');
@@ -132,7 +132,7 @@
 
         function addToCart(productId, quantity) {
             const userId = 1; // Assume user ID is 1 for simplicity
-            fetch(`/backend/api.php?action=addToCart`, {
+            fetch(`https://raw.githubusercontent.com/Qi-Hua-fine/online-store/refs/heads/main/backend/api.php?action=addToCart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -157,7 +157,7 @@
         }
 
         function fetchCartItems(userId) {
-            fetch(`/backend/api.php?action=getCart&user_id=${userId}`)
+            fetch(`https://raw.githubusercontent.com/Qi-Hua-fine/online-store/refs/heads/main/backend/api.php?action=getCart&user_id=${userId}`)
                 .then(response => response.json())
                 .then(data => {
                     const cartItemsDiv = document.getElementById('cart-items');
@@ -188,7 +188,7 @@
         }
 
         function fetchCartItemsForModal(userId) {
-            fetch(`/backend/api.php?action=getCart&user_id=${userId}`)
+            fetch(`https://raw.githubusercontent.com/Qi-Hua-fine/online-store/refs/heads/main/backend/api.php?action=getCart&user_id=${userId}`)
                 .then(response => response.json())
                 .then(data => {
                     const checkoutCartItemsDiv = document.getElementById('checkout-cart-items');
