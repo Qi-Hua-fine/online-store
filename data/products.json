@@ -4,7 +4,7 @@
         "name": "Laptop",
         "description": "A high-performance laptop with the latest technology.",
         "price": 999.99,
-        "image_url": "https://via.placeholder.com/100",
+        "image_url": "https://p1-ofp.static.pub/medias/25694757880_New_AG_202303210427441684359118056.png",
         "stock": 50
     },
     {
@@ -12,7 +12,7 @@
         "name": "Smartphone",
         "description": "The newest smartphone model with advanced features.",
         "price": 499.99,
-        "image_url": "https://via.placeholder.com/100",
+        "image_url": "https://tse1.mm.bing.net/th?id=OIP.RMphHt7YnLp0tQ5qhsil_gHaHa&cb=iwp&rs=1&pid=ImgDetMain",
         "stock": 30
     },
     {
@@ -20,7 +20,7 @@
         "name": "Headphones",
         "description": "Noise-cancelling headphones for an immersive audio experience.",
         "price": 199.99,
-        "image_url": "https://via.placeholder.com/100",
+        "image_url": "https://th.bing.com/th/id/R.39ebbd2b6f50cd837b7839cbae3813cd?rik=W54%2bih8fsDP76w&riu=http%3a%2f%2fwww.bhphotovideo.com%2fimages%2fimages2500x2500%2fbeats_by_dr_dre_900_00109_01_studio_wireless_headphones_red_1016369.jpg&ehk=NfT%2bRJ73BF%2fyQBBJt5TZDIDu%2fWshOxWBOQ0YElt0bno%3d&risl=&pid=ImgRaw&r=0",
         "stock": 100
     },
     {
@@ -28,7 +28,7 @@
         "name": "Smartwatch",
         "description": "A smartwatch with health tracking and messaging capabilities.",
         "price": 299.99,
-        "image_url": "https://via.placeholder.com/100",
+        "image_url": "https://m.media-amazon.com/images/I/71mTOO-TKUL._AC_SL1500_.jpg",
         "stock": 20
     },
     {
@@ -36,7 +36,7 @@
         "name": "Tablet",
         "description": "A versatile tablet for work and entertainment.",
         "price": 299.99,
-        "image_url": "https://via.placeholder.com/100",
+        "image_url": "https://i2.wp.com/www.reviews-tablet.com/wp-content/uploads/2016/03/Proscan-Windows-10-Tablet-10.1-inch-Intel-Quad-Core-Tablet-with-Detachable-and-Reversible-IPS-Touch-Screen-and-Keyboard-Bluetooth-4.0.jpg?ssl=1",
         "stock": 40
     }
 ]
