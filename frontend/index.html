@@ -4,217 +4,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Store</title>
+    <title>Product Store</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            position: relative;
         }
 
         .product {
             border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
         }
 
         .product img {
-            margin-right: 10px;
+            max-width: 100px;
+            margin-right: 20px;
         }
 
         .cart {
-            margin-top: 20px;
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #ccc;
         }
 
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .checkout-button {
-            margin-top: 10px;
-            padding: 10px 20px;
+        .checkout-btn {
             background-color: green;
             color: white;
+            padding: 10px 20px;
             border: none;
             cursor: pointer;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
-    <h1>Product List</h1>
-    <div id="product-list"></div>
 
+    <h1>Products</h1>
+    <div id="products"></div>
 
-    <div class="cart" id="cart-items"></div>
-    <button class="checkout-button" onclick="openCheckoutModal()">Checkout</button>
-
-    <!-- The Modal -->
-    <div id="checkout-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeCheckoutModal()">&times;</span>
-            <h2>Your Shopping Cart</h2>
-            <div id="checkout-cart-items"></div>
-            <p>Total Price: $<span id="total-price">0.00</span></p>
-            <button class="checkout-button" onclick="confirmCheckout()">Confirm Checkout</button>
-        </div>
+    <h2>Shopping Cart</h2>
+    <div class="cart">
+        <ul id="cart-items"></ul>
+        <p>Total: $<span id="total-price">0.00</span></p>
+        <button class="checkout-btn" onclick="checkout()">Checkout</button>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchProducts();
-            fetchCartItems(1); // Fetch cart items when the page loads
-        });
+        const products = [
+            {
+                "id": 1,
+                "name": "Laptop",
+                "description": "A high-performance laptop with the latest technology.",
+                "price": 999.99,
+                "image_url": "https://p1-ofp.static.pub/medias/25694757880_New_AG_202303210427441684359118056.png",
+                "stock": 50
+            },
+            {
+                "id": 2,
+                "name": "Smartphone",
+                "description": "The newest smartphone model with advanced features.",
+                "price": 499.99,
+                "image_url": "https://tse1.mm.bing.net/th?id=OIP.RMphHt7YnLp0tQ5qhsil_gHaHa&cb=iwp&rs=1&pid=ImgDetMain",
+                "stock": 30
+            },
+            {
+                "id": 3,
+                "name": "Headphones",
+                "description": "Noise-cancelling headphones for an immersive audio experience.",
+                "price": 199.99,
+                "image_url": "https://th.bing.com/th/id/R.39ebbd2b6f50cd837b7839cbae3813cd?rik=W54%2bih8fsDP76w&riu=http%3a%2f%2fwww.bhphotovideo.com%2fimages%2fimages2500x2500%2fbeats_by_dr_dre_900_00109_01_studio_wireless_headphones_red_1016369.jpg&ehk=NfT%2bRJ73BF%2fyQBBJt5TZDIDu%2fWshOxWBOQ0YElt0bno%3d&risl=&pid=ImgRaw&r=0",
+                "stock": 100
+            },
+            {
+                "id": 4,
+                "name": "Smartwatch",
+                "description": "A smartwatch with health tracking and messaging capabilities.",
+                "price": 299.99,
+                "image_url": "https://m.media-amazon.com/images/I/71mTOO-TKUL._AC_SL1500_.jpg",
+                "stock": 20
+            },
+            {
+                "id": 5,
+                "name": "Tablet",
+                "description": "A versatile tablet for work and entertainment.",
+                "price": 299.99,
+                "image_url": "https://i2.wp.com/www.reviews-tablet.com/wp-content/uploads/2016/03/Proscan-Windows-10-Tablet-10.1-inch-Intel-Quad-Core-Tablet-with-Detachable-and-Reversible-IPS-Touch-Screen-and-Keyboard-Bluetooth-4.0.jpg?ssl=1",
+                "stock": 40
+            }
+        ];
 
-        function fetchProducts() {
-            fetch('https://raw.githubusercontent.com/Qi-Hua-fine/online-store/main/data/products.json')
-                .then(response => response.json())
-                .then(data => {
-                    const productList = document.getElementById('product-list');
-                    data.forEach(product => {
-                        const div = document.createElement('div');
-                        div.className = 'product';
-                        div.innerHTML = `
-                            <img src="${product.image_url}" alt="${product.name}" width="100">
-                            <div>
-                                <h3>${product.name}</h3>
-                                <p>${product.description}</p>
-                                <p>$${product.price.toFixed(2)}</p>
-                                <button onclick="addToCart(${product.id}, 1)">Add to Cart</button>
-                            </div>
-                        `;
-                        productList.appendChild(div);
-                    });
-                })
-                .catch(error => console.error('Error fetching products:', error));
+        let cart = [];
+        let totalPrice = 0;
+
+        function renderProducts() {
+            const productsContainer = document.getElementById('products');
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                <img src="${product.image_url}" alt="${product.name}">
+                <div>
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p>$${product.price.toFixed(2)}</p>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+            `;
+                productsContainer.appendChild(productDiv);
+            });
         }
 
-        function addToCart(productId, quantity) {
-            const userId = 1; // Assume user ID is 1 for simplicity
-            fetch(`https://raw.githubusercontent.com/Qi-Hua-fine/online-store/refs/heads/main/backend/api.php?action=addToCart`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user_id: userId, product_id: productId, quantity: quantity })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert(data.message);
-                        fetchCartItems(userId); // Reload cart items after adding
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(error => console.error('Error adding to cart:', error));
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                totalPrice += product.price;
+                updateCart();
+            }
         }
 
-        function fetchCartItems(userId) {
-            fetch(`https://raw.githubusercontent.com/Qi-Hua-fine/online-store/refs/heads/main/backend/api.php?action=getCart&user_id=${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const cartItemsDiv = document.getElementById('cart-items');
-                    cartItemsDiv.innerHTML = ''; // Clear previous items
-                    if (data.data.length === 0) {
-                        cartItemsDiv.textContent = 'Your cart is empty.';
-                    } else {
-                        data.data.forEach(item => {
-                            const div = document.createElement('div');
-                            div.className = 'cart-item';
-                            div.textContent = `${item.product_name}: ${item.quantity}`;
-                            cartItemsDiv.appendChild(div);
-                        });
-                    }
-                })
-                .catch(error => console.error('Error fetching cart items:', error));
+        function updateCart() {
+            const cartItemsList = document.getElementById('cart-items');
+            cartItemsList.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItemsList.appendChild(li);
+            });
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2);
         }
 
-        function openCheckoutModal() {
-            const modal = document.getElementById('checkout-modal');
-            modal.style.display = 'block';
-            fetchCartItemsForModal(1); // Fetch cart items for the modal
+        function checkout() {
+            alert(`Thank you for your purchase! Total amount: $${totalPrice.toFixed(2)}`);
+            cart = [];
+            totalPrice = 0;
+            updateCart();
         }
 
-        function closeCheckoutModal() {
-            const modal = document.getElementById('checkout-modal');
-            modal.style.display = 'none';
-        }
-
-        function fetchCartItemsForModal(userId) {
-            fetch(`https://raw.githubusercontent.com/Qi-Hua-fine/online-store/refs/heads/main/backend/api.php?action=getCart&user_id=${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const checkoutCartItemsDiv = document.getElementById('checkout-cart-items');
-                    checkoutCartItemsDiv.innerHTML = '';
-                    let totalPrice = 0;
-
-                    data.data.forEach(item => {
-                        const price = parseFloat(item.price); // Assuming each item has a price property
-                        const totalItemPrice = price * item.quantity;
-                        totalPrice += totalItemPrice;
-
-                        const div = document.createElement('div');
-                        div.textContent = `${item.product_name}: ${item.quantity} x $${price.toFixed(2)} = $${totalItemPrice.toFixed(2)}`;
-                        checkoutCartItemsDiv.appendChild(div);
-                    });
-
-                    document.getElementById('total-price').textContent = totalPrice.toFixed(2);
-                })
-                .catch(error => console.error('Error fetching cart items for modal:', error));
-        }
-
-        function confirmCheckout() {
-            alert('Checkout confirmed!'); // Placeholder for actual checkout logic
-            closeCheckoutModal();
-        }
+        renderProducts();
     </script>
+
 </body>
 
 </html>
